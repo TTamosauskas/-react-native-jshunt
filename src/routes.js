@@ -6,7 +6,6 @@ import Main from './pages/Main';
 
 const Routes = createAppContainer(
   createStackNavigator({
-    Main,
-  })
-);
+    Main
+  }));
 export default Routes;
