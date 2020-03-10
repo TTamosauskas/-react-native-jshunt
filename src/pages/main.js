@@ -46,7 +46,10 @@ renderItem = ({item}) => (
   <View  style={styles.productContainer}>
     <Text style={styles.productTitle}>{item.title}</Text>
     <Text style={styles.productDescription}> {item.description}</Text>
-    <TouchableOpacity style={styles.productButton} onPress={()=>{}}>
+
+    <TouchableOpacity 
+    style={styles.productButton} 
+    onPress={()=>{this.props.navigation.navigate('Product', {product:item})}}>
     <Text style={styles.productButtonText}>Acessar</Text>
     </TouchableOpacity>
   </View>
@@ -103,7 +106,7 @@ productButton:{
   height:42,
   borderRadius:5,
   borderWidth:2,
-  borderColor:"DA552F",
+  borderColor:"#DA552F",
   backgroundColor:"transparent",
   justifyContent: "center",
   alignItems: "center",
@@ -112,7 +115,7 @@ productButton:{
 
 productButtonText:{
   fontSize:16,
-  color:"DA552F",
+  color:"#DA552F",
   fontWeight:"bold"
 }
 
