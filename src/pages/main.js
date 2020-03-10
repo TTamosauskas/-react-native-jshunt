@@ -11,7 +11,9 @@ static navigationOptions = {
   }
 
 state = {
+  productInfo:{},
   docs:[],
+  page:1,
 
 }
 
@@ -19,13 +21,26 @@ componentDidMount(){
   this.loadProducts();
 }
 
-loadProducts = async() => {
-  const response = await api.get('/products');
+loadProducts = async(page = 1) => {
+  const response = await api.get(`/products?page=${page}`);
 
-  const { docs } = response.data;
+  const { docs, ...productInfo } = response.data;
   
-  this.setState({docs});
+  this.setState({
+    docs:[... this.state.docs, ...docs],
+    productInfo,
+    page});
 };
+
+loadMore = () => {
+  const {page, productInfo} = this.state;
+
+  if (page === productInfo.pages) return
+
+  const pageNumber = page +1
+
+  this.loadProducts(pageNumber)
+}
 
 renderItem = ({item}) => (
   <View  style={styles.productContainer}>
@@ -44,7 +59,9 @@ render(){
    contentContainerStyle={styles.list}
    data={this.state.docs}
    keyExtractor={item=> item._id}
-   renderItem={this.renderItem}>
+   renderItem={this.renderItem}
+   onEndReached={this.loadMore}
+   onEndReachedThreshold={0.1}>
    </FlatList>
   </View>
   );
